@@ -12,6 +12,7 @@
     "@koa/bodyparser": "^5.0.0",
     "co-body": "^6.1.0",
     "koa": "^2.14.2",
+    "koa-response-time": "^2.1.0",
     "koa-route": "^3.2.0",
     "npm-demo-0109": "^1.0.3"
   }
