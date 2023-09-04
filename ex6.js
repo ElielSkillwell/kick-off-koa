@@ -12,16 +12,20 @@ app.use(function* () {
 function responseTime() {
     return function* (next) {
         const start = new Date();
-    // record start time
-    next.set('X-Response-Time', str(new Date() - start) + 'ms');
-    // set X-Response-Time head
+        yield next;
+        const end = new Date() - start;
+        this.set('X-Response-Time', end + 'ms');    
     };
 }
 
 function upperCase() {
     return function* (next) {
-        this.body = this.req.body.toUpperCase()
+        yield next;
+        if (this.body) {
+          this.body = this.body.toUpperCase();
+        }
     };
 }
+
 
 app.listen(process.argv[2]);
