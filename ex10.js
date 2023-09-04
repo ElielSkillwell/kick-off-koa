@@ -1,18 +1,24 @@
 var koa = require('koa');
-var session = require('koa-session')
+var views = require('co-views');
 
 var app = new koa();
-app.keys = ['secret', 'keys'];
 
-app.use(session(app))
+var render = views(__dirname + '/views', {
+  ext: 'ejs'
+});
+
+var user = {
+  name: {
+    first: 'Tobi',
+    last: 'Holowaychuk'
+  },
+  species: 'ferret',
+  age: 3
+};
 
 app.use(function* (next) {
 
-    let viewCount = this.session.views || 0
-
-    this.session.views = ++viewCount
-    this.body = `${viewCount} views`
-    yield next;
+    this.body = yield render('user', { user: user })
   });
 
 app.listen(process.argv[2]);
